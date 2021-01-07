@@ -2,17 +2,19 @@
 # provisioniert Openstack vom Deploy-Rechner aus
 export DEBIAN_FRONTEND=noninteractive
 
-# fixing hostname
+echo "***** Step 2: Installing Kolla-Ansible and run it"
+
+echo "*****  fixing hostname"
 hostname deploy
 echo "deploy" > /etc/hostname
 
-# installing kolla from pip3 repo
+echo "*****  installing kolla from pip3 repo"
 pip3 install kolla-ansible
 
-# getting default configuration for kolla
+echo "*****  getting default configuration for kolla"
 cp -r /usr/local/share/kolla-ansible/etc_examples/kolla /etc/ 
 
-# altering configuration to match our configuration and choices in terms of distribution, network and virtualization engine (QEMU because Virtualbox does not do nested virtualization)
+echo "*****  altering configuration to match our configuration and choices in terms of distribution, network and virtualization engine (QEMU because Virtualbox does not do nested virtualization)"
 # a) we are adding centralized logging, which will install a ELK instance listening on http://192.168.50.68:5601
 # b) we need to change keepalived virtual router id in order to elimiate conflict with concurrent openstack on the network
 sed -i s/'#openstack_release: ""'/'openstack_release: "rocky"'/g /etc/kolla/globals.yml
@@ -24,22 +26,26 @@ sed -i s/'#nova_compute_virt_type: "kvm"'/'nova_compute_virt_type: "qemu"'/g /et
 sed -i s/'#enable_central_logging: "no"'/'enable_central_logging: "yes"'/g /etc/kolla/globals.yml
 sed -i s/'#keepalived_virtual_router_id: "51"'/'keepalived_virtual_router_id: "251"'/g /etc/kolla/globals.yml
 
-# Generating password and keeping a copy in this directory
+echo "*****  Generating password and keeping a copy in this directory"
 kolla-genpwd 
 cp /etc/kolla/passwords.yml /vagrant/
 
-# deploy SSH key generated previously (Vagrantfile)
+echo "*****  deploy SSH key generated previously (Vagrantfile)"
 cat /vagrant/ssh_key > /root/.ssh/id_rsa 
 cat /vagrant/ssh_key.pub > /root/.ssh/id_rsa.pub
 chmod go-rwx /root/.ssh/id_rsa
 
-# fingerprinting ssh across all the hosts of the cluster
+echo "*****  fingerprinting ssh across all the hosts of the cluster"
 ssh-keyscan controller01 >> /root/.ssh/known_hosts
 ssh-keyscan controller02 >> /root/.ssh/known_hosts
 ssh-keyscan compute01 >> /root/.ssh/known_hosts
 
-# Running Kolla 
+echo "*****  Running Kolla"
+echo "***** Bootstrap-Servers"
 kolla-ansible -i /vagrant/conf/3-nodes bootstrap-servers
+echo "***** Prechecks"
 kolla-ansible -i /vagrant/conf/3-nodes prechecks
+echo "***** Deploy"
 kolla-ansible -i /vagrant/conf/3-nodes deploy
+echo "***** Post-Depoly"
 kolla-ansible -i /vagrant/conf/3-nodes post-deploy

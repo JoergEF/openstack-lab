@@ -1,9 +1,8 @@
 # -*- mode: ruby -*-
 
 # generate SSH key in the folder if they don't exist already
-system('echo "Installing vagrant plugin required and generate SSH key for Openstack cluster..."')
-system('[ -f ssh_key ] && echo "An existing key has been detected and will be used" || ssh-keygen -f ssh_key -P ""')
-system('[ $(vagrant plugin list | grep -c vagrant-disksize) = "0" ] && vagrant plugin install vagrant-disksize || echo "Vagrant plugin detected"')
+system('[ -f ssh_key ] || ssh-keygen -f ssh_key -P ""')
+system('[ $(vagrant plugin list | grep -c vagrant-disksize) = "0" ] && vagrant plugin install vagrant-disksize')
 
 Vagrant.configure("2") do |config|
 
