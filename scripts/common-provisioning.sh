@@ -2,8 +2,9 @@
 # Allgemeines Housekeeping für alle Nodes
 DEBIAN_FRONTEND=noninteractive
 
-# update packages list
+# update packages list and system
 apt-get update
+apt-get -y upgrade
 
 # install pip3 to install a recent enough version of ansible
 apt-get -qy install python3-pip
