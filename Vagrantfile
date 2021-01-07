@@ -130,10 +130,10 @@ Vagrant.configure("2") do |config|
     deploy.vm.provision "shell", path: $common_provisioning
     
     # install kolla and deploy openstack using ansible scripts provided by Kolla
-    deploy.vm.provision "shell", path: $openstack_install
+    #deploy.vm.provision "shell", path: $openstack_install
 
     # configure newly install openstack with a labuser account
-    deploy.vm.provision "shell", path: $openstack_config
+    #deploy.vm.provision "shell", path: $openstack_config
 
   end
 
