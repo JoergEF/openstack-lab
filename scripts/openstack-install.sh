@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # provisioniert Openstack vom Deploy-Rechner aus
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 # fixing hostname
 hostname deploy

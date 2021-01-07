@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Allgemeines Housekeeping für alle Nodes
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 # update packages list and system
 apt-get update

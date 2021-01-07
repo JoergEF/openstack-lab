@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # konfiguriert die Mitglieder des Clusters
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 # copy configuration-file for neutron-nic and apply
 cp /vagrant/conf/60-enp0s9.yaml /etc/netplan

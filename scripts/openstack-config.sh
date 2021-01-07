@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # konfiguriert die Mitglieder des Clusters nach dem Provisioning mittels Ansible
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 # fix locales (in order to make openstack client happy)
 echo 'LC_ALL="en_US.UTF-8"'  >>  /etc/default/locale
