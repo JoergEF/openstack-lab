@@ -9,19 +9,19 @@ Vagrant.configure("2") do |config|
 
   $physical_interface = "enp10s1"
 
-  $common_provisioning = "scripts/common_provisioning.sh"
+  $common_provisioning = "scripts/common-provisioning.sh"
 
   # this section is responsible for configuring the VM nodes part of the cluster
-  $openstack_provisioning = "scripts/openstack_provisioning.sh"
+  $openstack_provisioning = "scripts/openstack-provisioning.sh"
 
   # set the default route on hosts after reboot
-  $change_defaultroute = "scripts/change_defaultroute.sh"
+  $change_defaultroute = "scripts/change-defaultroute.sh"
 
   # this section is responsible for configuring Openstack after the ansible scripts are run
-  $openstack_config = "scripts/openstack_config.sh"
+  $openstack_config = "scripts/openstack-config.sh"
 
   # this section is reponsible for installing Kolla on the deploy host and then trigger the deployment
-  $openstack_install = "scripts/openstack_install.sh"
+  $openstack_install = "scripts/openstack-install.sh"
 
   # a controler 
   config.vm.define "controller01" do |controller01|
