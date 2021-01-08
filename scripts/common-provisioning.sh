@@ -7,6 +7,7 @@ echo "***** Step 1: Common Provisioning"
 echo "***** update packages list and system"
 apt-get update
 apt-get -y upgrade
+apt-get -qy install apt-transport-https
 
 echo "***** install pip3 to install a recent enough version of ansible"
 apt-get -qy install python3-pip
