@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
 
   # a controler 
   config.vm.define "controller01" do |controller01|
-    controller01.vm.box = "ubuntu/focal64"
+    controller01.vm.box = "ubuntu/bionic64"
 
      controller01.vm.provider "virtualbox" do |v|
       v.name = "kolla-multinode-controller01"
@@ -50,11 +50,17 @@ Vagrant.configure("2") do |config|
     echo "controller01" > /etc/hostname
     SHELL
 
+    # rebooting
+    controller01.trigger.after [:provision] do |t|
+      t.name = "Reboot after provisioning"
+      t.run = { :inline => "vagrant reload" }
+    end
+
   end
 
   # a second controler
   config.vm.define "controller02" do |controller02|
-    controller02.vm.box = "ubuntu/focal64"
+    controller02.vm.box = "ubuntu/bionic64"
 
     controller02.vm.provider "virtualbox" do |v|
       v.name = "kolla-multinode-controller02"
@@ -80,11 +86,18 @@ Vagrant.configure("2") do |config|
     echo "controller02" > /etc/hostname
     SHELL
 
+    # rebooting
+    controller02.trigger.after [:provision] do |t|
+      t.name = "Reboot after provisioning"
+      t.run = { :inline => "vagrant reload" }
+    end
+
+
   end
 
   # a compute resource
   config.vm.define "compute01" do |compute01|
-    compute01.vm.box = "ubuntu/focal64"
+    compute01.vm.box = "ubuntu/bionic64"
     compute01.disksize.size = '120GB' # require vagrant plugin disk-resize
 
     compute01.vm.provider "virtualbox" do |v|
@@ -111,11 +124,17 @@ Vagrant.configure("2") do |config|
     echo "compute01" > /etc/hostname
     SHELL
 
+    # rebooting
+    compute01.trigger.after [:provision] do |t|
+      t.name = "Reboot after provisioning"
+      t.run = { :inline => "vagrant reload" }
+    end
+
   end
 
   # a provisioner machine that will execute Kolla and pilot the deployment of Openstack
   config.vm.define "deploy" do |deploy|
-    deploy.vm.box = "ubuntu/focal64"
+    deploy.vm.box = "ubuntu/bionic64"
 
     deploy.vm.provider "virtualbox" do |v|
       v.name = "kolla-multinode-deploy"

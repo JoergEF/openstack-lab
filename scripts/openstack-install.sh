@@ -17,8 +17,8 @@ cp -r /usr/local/share/kolla-ansible/etc_examples/kolla /etc/
 echo "*****  altering configuration to match our configuration and choices in terms of distribution, network and virtualization engine (QEMU because Virtualbox does not do nested virtualization)"
 # a) we are adding centralized logging, which will install a ELK instance listening on http://192.168.50.68:5601
 # b) we need to change keepalived virtual router id in order to elimiate conflict with concurrent openstack on the network
-sed -i s/'#openstack_release: ""'/'openstack_release: "rocky"'/g /etc/kolla/globals.yml
-sed -i s/'kolla_internal_vip_address: "10.10.10.254"'/'kolla_internal_vip_address: "192.168.50.68"'/g /etc/kolla/globals.yml
+sed -i s/'#openstack_release: "ussuri"'/'openstack_release: "rocky"'/g /etc/kolla/globals.yml
+sed -i s/'#kolla_internal_vip_address: "10.10.10.254"'/'kolla_internal_vip_address: "192.168.50.68"'/g /etc/kolla/globals.yml
 sed -i s/'#network_interface: "eth0"'/'network_interface: "enp0s8"'/g /etc/kolla/globals.yml
 #sed -i s/'#enable_haproxy: "yes"'/'enable_haproxy: "yes"'/g /etc/kolla/globals.yml
 sed -i s/'#neutron_external_interface: "eth1"'/'neutron_external_interface: "enp0s9"'/g /etc/kolla/globals.yml
