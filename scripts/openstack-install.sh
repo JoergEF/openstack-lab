@@ -42,10 +42,10 @@ ssh-keyscan compute01 >> /root/.ssh/known_hosts
 
 echo "*****  Running Kolla"
 echo "***** Bootstrap-Servers"
-kolla-ansible -i /vagrant/conf/3-nodes bootstrap-servers
+#kolla-ansible -i /vagrant/conf/3-nodes bootstrap-servers
 echo "***** Prechecks"
-kolla-ansible -i /vagrant/conf/3-nodes prechecks
+#kolla-ansible -i /vagrant/conf/3-nodes prechecks
 echo "***** Deploy"
-kolla-ansible -i /vagrant/conf/3-nodes deploy
+#kolla-ansible -i /vagrant/conf/3-nodes deploy
 echo "***** Post-Depoly"
-kolla-ansible -i /vagrant/conf/3-nodes post-deploy
+#kolla-ansible -i /vagrant/conf/3-nodes post-deploy
