@@ -1,10 +1,6 @@
 new:
+	git pull
 	vagrant up
-	vagrant reload
-
-fresh: clean
-	vagrant up
-	vagrant reload
 
 clean:
 	vagrant destroy -f
