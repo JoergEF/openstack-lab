@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
 
   # the router
   config.vm.define "rt-b" do |rtb|
-    rt-b.vm.box = "ubuntu/focal64"
+    rtb.vm.box = "ubuntu/focal64"
     rtb.vm.hostname = "rt-b"
     rtb.vm.network "public_network", bridge: $physical_interface, ip: "192.168.50.253"
     rtb.vm.provider "virtualbox" do |vb|
@@ -34,14 +34,14 @@ Vagrant.configure("2") do |config|
     end
     
     # housekeeping
-    rt-b.vm.provision "shell", path: $common_provisioning
+    rtb.vm.provision "shell", path: $common_provisioning
 
     # provisioning
     rtb.vm.provision "shell", path: "scripts/rtb-provision.sh"
 
 
     # rebooting
-    rt-b.trigger.after [:provision] do |t|
+    rtb.trigger.after [:provision] do |t|
       t.name = "Reboot after provisioning"
       t.run = { :inline => "vagrant reload" }
     end
@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "controller01" do |controller01|
     controller01.vm.box = "ubuntu/bionic64"
 
-     controller01.vm.provider "virtualbox" do |v|
+    controller01.vm.provider "virtualbox" do |v|
       v.name = "kolla-multinode-controller01"
       v.memory = 8192 
       v.cpus = 2
