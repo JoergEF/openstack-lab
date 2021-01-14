@@ -320,6 +320,9 @@ control
 [neutron-dhcp-agent:children]
 neutron
 
+[neutron-metering-agent:children]
+neutron
+
 [neutron-l3-agent:children]
 neutron
 
