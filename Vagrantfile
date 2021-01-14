@@ -22,6 +22,31 @@ Vagrant.configure("2") do |config|
   # this section is reponsible for installing Kolla on the deploy host and then trigger the deployment
   $openstack_install = "scripts/openstack-install.sh"
 
+  # the router
+  config.vm.define "rt-b" do |rtb|
+    rt-b.vm.box = "ubuntu/focal64"
+    rtb.vm.hostname = "rt-b"
+    rtb.vm.network "public_network", bridge: $physical_interface, ip: "192.168.50.253"
+    rtb.vm.provider "virtualbox" do |vb|
+      vb.name = "rt-b"
+      vb.cpus = "1"
+      vb.memory = "2048"
+    end
+    
+    # housekeeping
+    rt-b.vm.provision "shell", path: $common_provisioning
+
+    # provisioning
+    rtb.vm.provision "shell", path: "scripts/rtb-provision.sh"
+
+
+    # rebooting
+    rt-b.trigger.after [:provision] do |t|
+      t.name = "Reboot after provisioning"
+      t.run = { :inline => "vagrant reload" }
+    end
+  end
+  
   # a controler 
   config.vm.define "controller01" do |controller01|
     controller01.vm.box = "ubuntu/bionic64"
