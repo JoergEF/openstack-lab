@@ -99,6 +99,9 @@ storage
 [elasticsearch:children]
 control
 
+[elasticsearch-curator:children]
+control
+
 [haproxy:children]
 network
 
