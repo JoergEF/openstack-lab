@@ -329,6 +329,9 @@ neutron
 [neutron-metadata-agent:children]
 neutron
 
+[neutron-ovn-metadata-agent:children]
+neutron
+
 [neutron-bgp-dragent:children]
 neutron
 
